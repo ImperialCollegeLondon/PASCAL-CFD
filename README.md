@@ -85,9 +85,9 @@ Detailed explanation of the workflow and the implemented methodology are to be p
 <!-- GETTING STARTED -->
 ## Getting Started
 
-The project comprises a set of stand-alone scripts to be executed sequentially in for the different phases of a CFD project concerning portions of the aorta (i.e. preprocessing and simulation setup, running simulation and post-processing).
+The project comprises a set of stand-alone scripts to be executed sequentially for the different phases of a CFD project concerning portions of the aorta (i.e. preprocessing and simulation setup, running simulation and post-processing).
 - For preprocessing purposes, you should be able to run MATLAB scripts.
-- For using the shell utility scripts, intended for helping with running simulations, you should have access to a linux-sytle console (Bash).
+- For using the shell utility scripts, intended for helping with running simulations, you should have access to a linux-style console (Bash).
 - For using the postprocessing scripts, Python is required. However, these scripts are intended to be used from within ANSYS EnSight, which should not require an extra Python installation.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -95,8 +95,207 @@ The project comprises a set of stand-alone scripts to be executed sequentially i
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-The usage workflow will be detailed here in future versions of the `README` file, and maybe a simple example will be given.
+The toolbox's intended workflow is described below.
+<details>
+  <summary><span style="font-size: 1.17em; font-weight: bold;">Preprocessing and simulation setup</summary>
+  
+A series of scripts are provided for tuning patient-specific boundary conditions for both the inlet and the outlet.
+1. **Tune inlet boundary conditions for each patient with `fitInletBC.m`**
+    
+    Configure the following parameters:
+    - `nTerms`: number of modes (harmonics) to be considered for the Fourier series approximation of the reference inlet waveform.
+    - `divFrac`: fraction of the patient's Stroke Volume (SV) that is diverted to other branches before reaching the inlet of the simulation domain. E.g. according to Moore & Ku (1994), divFrac=0.25 for the descending aorta (25% of the flow is diverted to the arch's branches).
 
+    Import the required data as indicated within the script's commentaries. The following tables should be set up by the user:
+    - `refInletWave`: should contain the time (in seconds) and flow (in cubic metres per second) coordinates for the points describing the reference waveform, with variable (column) names 'Time' and 'Qin'.
+    
+      *Notice that it is assumed that a full period is described (i.e. the pulse described starts at time zero and the last time stamp corresponds to the period of the reference wave).*
+    <div style="margin: 0 auto; width: fit-content;">
+        <table style="margin: 0 auto;">
+            <tr>
+                <th style="text-align: center;">Time [s]</th>
+                <th style="text-align: center;">Qin [m3/s]</th>
+            </tr>
+            <tr>
+                <td style="text-align: center;">0</td>
+                <td style="text-align: center;">Qin_0</td>
+            </tr>
+            <tr>
+                <td style="text-align: center;">Time_1</td>
+                <td style="text-align: center;">Qin_1</td>
+            </tr>
+            <tr>
+                <td style="text-align: center;">. . .</td>
+                <td style="text-align: center;">. . .</td>
+            </tr>
+            <tr>
+                <td style="text-align: center;">T_end</td>
+                <td style="text-align: center;">Qin_end</td>
+            </tr>
+        </table>
+    </div>
+
+    - `clinicalData`: should contain the following variables, with each row corresponding to one patient.
+      -  `Case`: case name for each patient (string within a cell, `clincalData.Case` should produce a cell array).
+      -  `SP`: average systolic cuff pressure reading, in mmHg.
+      -  `DP`: average diastolic cuff pressure reading, in mmHg.
+      -  `HR`: heart rate, in bpm.
+      -  `phi`: haematocrit fraction.
+    <div style="margin: 0 auto; width: fit-content;">
+        <table style="margin: 0 auto;">
+            <tr>
+                <th style="text-align: center;">Case</th>
+                <th style="text-align: center;">SP [mmHg]</th>
+                <th style="text-align: center;">DP [mmHg]</th>
+                <th style="text-align: center;">HR [bpm]</th>
+                <th style="text-align: center;">phi</th>
+            </tr>
+            <tr>
+                <td style="text-align: center;">case1</td>
+                <td style="text-align: center;">140.0</td>
+                <td style="text-align: center;">78.0</td>
+                <td style="text-align: center;">75.0</td>
+                <td style="text-align: center;">0.388</td>
+            </tr>
+            <tr>
+                <td style="text-align: center;">. . .</td>
+                <td style="text-align: center;">. . .</td>
+                <td style="text-align: center;">. . .</td>
+                <td style="text-align: center;">. . .</td>
+                <td style="text-align: center;">. . .</td>
+            </tr>
+        </table>
+    </div>
+
+    The output from the execution should be the following:
+    
+    - `FitInletBC_out.xlsx`: Excel book containing the following two pages.
+      - `patientResults`: table containing some patient-specific variables required for the CFD simulation setup:
+        - `Case`: case name for each patient.
+        - `T`: heart beat period, in s.
+        - `Pmean`: average pressure, in mmHg.
+        - `Vp`: blood volume going through the inlet of the CFD domain within one heart beat, in m3.
+        - `ScaleFactor`: amplitude scale factor for the reference waveform.
+        - `phi`: haematocrit fraction.
+        <div style="margin: 0 auto; width: fit-content;">
+        <table style="margin: 0 auto;">
+            <tr>
+                <th style="text-align: center;">Case</th>
+                <th style="text-align: center;">T [s]</th>
+                <th style="text-align: center;">Pmean [mmHg]</th>
+                <th style="text-align: center;">Vp [m3]</th>
+                <th style="text-align: center;">ScaleFactor</th>
+                <th style="text-align: center;">phi</th>
+            </tr>
+            <tr>
+                <td style="text-align: center;">case1</td>
+                <td style="text-align: center;">0.80</td>
+                <td style="text-align: center;">102.8</td>
+                <td style="text-align: center;">6.02E-05</td>
+                <td style="text-align: center;">2.319</td>
+                <td style="text-align: center;">0.388</td>
+            </tr>
+            <tr>
+                <td style="text-align: center;">. . .</td>
+                <td style="text-align: center;">. . .</td>
+                <td style="text-align: center;">. . .</td>
+                <td style="text-align: center;">. . .</td>
+                <td style="text-align: center;">. . .</td>
+                <td style="text-align: center;">. . .</td>
+            </tr>
+        </table>
+        </div>
+      - `baseFourierSeries`: table containing the Fourier series coefficients for the approximated reference waveform, up to the nTerms-th mode.
+    - `FitInletBC.txt`: plain text file reporting on the Fourier series approximation obtained (analytical expression and adjusted coefficients).
+    - Control figures: two figures are produced:
+      - `Fig_seriesVsOriginalData`: figure comparing the original reference waveform, as described by the imported coordinates, and the approximated result by a truncated Fourier series decomposition. Allows to qualitatively evaluate if enough modes have been considered.
+      - `Fig_patientSpecificInflow`: figure depicting all the scaled inlet waveforms, for all the patients within the cohort.
+2. **Tune three-element windkessel models (3-EWM) for each outlet boundary condition for each patient with `windkesselTuning.m`**
+   
+    Configure the following parameters:
+   - `missingArteryManagement`: numeric (integer) switch, defines what to do with the flow of implicitly represented branches for adjusting reference flow split factors.
+   - `flowSplitFactorReference`: numeric (integer) switch, defines which literature reference to use for flow split factors.
+   - `branchesWithinDomain`: cell array containing strings which identify which branching arteries lie within the portion of the aorta that is being simulated.
+  
+    *Notice that this is an anatomical description, but some of these branches may not be part of the CFD domain (implicitly represented branches).*
+
+    Import the required data as indicated within the script's commentaries. The following tables tables should be set up by the user:
+    - `area`: contains the area of the inlet and each branching outlet considered. The first column should be `Case`, containing the case name for each patient (string within a cell, `area.Case` should produce a cell array). The other columns should be the area, in m2, for the outlet branches. The names of these variables should be compatible with the code name assigned to each branch within the program (in particular, within the `outletBranchesProgrammed` cell array).
+  
+    *Notice that if an outlet branch is to be implicitly represented within the CFD simulation domain, its corresponding colum should be missing or its area should be set to zero within the table. For example, in the table below, corresponding to a domain extending from the thoracic aorta to the iliac bifurcation, the Right Renal Artery (RRA) and Left Renal Artery (LRA) are implicitly represented for all patients (columns missing), and the Superior Mesenteric Artery (SMA) is implicitly represented for case2 (area is set to zero), but not for case1 (non-zero area).*
+    <div style="margin: 0 auto; width: fit-content;">
+    <table style="margin: 0 auto;">
+        <tr>
+            <th style="text-align: center;">Case</th>
+            <th style="text-align: center;">Inlet [m2]</th>
+            <th style="text-align: center;">CA [m2]</th>
+            <th style="text-align: center;">SMA [m2]</th>
+            <th style="text-align: center;">RIA [m2]</th>
+            <th style="text-align: center;">LIA [m2]</th>
+        </tr>
+        <tr>
+            <td style="text-align: center;">case1</td>
+            <td style="text-align: center;">4.75E-04</td>
+            <td style="text-align: center;">3.12E-05</td>
+            <td style="text-align: center;">6.02E-05</td>
+            <td style="text-align: center;">1.59E-04</td>
+            <td style="text-align: center;">7.31E-05</td>
+        </tr>
+        <tr>
+            <td style="text-align: center;">case2</td>
+            <td style="text-align: center;">5.61E-04</td>
+            <td style="text-align: center;">6.25E-05</td>
+            <td style="text-align: center;">0</td>
+            <td style="text-align: center;">7.75E-05</td>
+            <td style="text-align: center;">1.43E-04</td>
+        </tr>
+        <tr>
+            <td style="text-align: center;">. . .</td>
+            <td style="text-align: center;">. . .</td>
+            <td style="text-align: center;">. . .</td>
+            <td style="text-align: center;">. . .</td>
+            <td style="text-align: center;">. . .</td>
+            <td style="text-align: center;">. . .</td>
+        </tr>
+    </table>
+    </div>
+
+    - `clinicalData`: should contain the following variables, with each row corresponding to one patient.
+      -  `Case`: case name for each patient (string within a cell, `clincalData.Case` should produce a cell array).
+      -  `SP`: average systolic cuff pressure reading, in mmHg.
+      -  `DP`: average diastolic cuff pressure reading, in mmHg.
+      -  `Qin`: time-averaged (over a cardiac cycle) inflow to the domain, in mL/s.
+ 
+        *Notice that if Qin is not computed externally and loaded with the rest of the data, it can be approximated by uncommenting the lines provided within the code. Also notice that SP, DP and Qin are to be converted into SI base units after being loaded (already implemented at the end of the loading section).*
+    
+    The output from the execution should be the following:
+    
+    - `WindkesselTuning_out.xlsx`: Excel book containing the following three pages.
+      - `WK_Rc`: table containing the proximal resistance (R1 or Rc) results for each patient and each branch. The first column `Case`, identifies the patient (on patient per rwo). The other columns correspond to the resistance value, and are named according to the implemented convention (in particular, within the `outletBranchesProgrammed` cell array).
+      - `WK_Rc`: table containing the distal resistance (R2 or Rp) results for each patient and each branch. Structure is analogous to `WK_Rc`.
+      - `WK_C`: table containing the compliance (C) results for each patient and each branch. Structure is analogous to `WK_Rc`.
+ 
+        *Notice that meaningless results will result for implicitly represented branches that are declared within the* `area` *table*.
+    
+    - `WindkesselTuning.out`: plain text file reporting the cases where the correction based on Reymond et al (2009) was needed, due to the resulting R1 values being too large (yielding negative R2 values).
+  
+3. **Build the expressions required for setting up each patient within ANSYS CFX-Pre with `buildPatientCFX`**
+    
+    This script should be adjusted to obtain the desired setup for the simulation cases at hand.
+
+    <div style="text-align:center">
+        <img src="Methodology_inletBC.png" alt="Workflow for inlet BC">
+    </div>
+</details>
+
+<details>
+<summary><span style="font-size: 1.17em; font-weight: bold;">Running simulations</summary>
+
+</details>
+
+<details>
+<summary><span style="font-size: 1.17em; font-weight: bold;">Postprocessing</summary>
+</details>
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- CONTRIBUTING -->
