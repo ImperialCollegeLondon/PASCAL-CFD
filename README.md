@@ -284,7 +284,7 @@ A series of scripts are provided for tuning patient-specific boundary conditions
     This script should be adjusted to obtain the desired setup for the simulation cases at hand.
 
     <div style="text-align:center">
-        <img src="Methodology_inletBC.png" alt="Workflow for inlet BC">
+        <img src="workflow_pre.png" alt="Workflow for preprocessing">
     </div>
 </details>
 
