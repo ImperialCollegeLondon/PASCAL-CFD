@@ -1,4 +1,4 @@
-%% INFLOW WAVEFORM FITTING SCRIPT
+%% BUILD ANSYS CFX-PRE EXPRESSIONS FOR EACH PATIENT
 % v1 - A.Vignolo - Nov 2023 - First implementation.
 % v2 - A.Vignolo - Dec 2023 - Updated to include expression for saving
 %                             time, allowing for single runs (no init).
