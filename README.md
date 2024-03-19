@@ -291,6 +291,24 @@ A series of scripts are provided for tuning patient-specific boundary conditions
 <details>
 <summary><span style="font-size: 1.17em; font-weight: bold;">Running simulations</summary>
 
+The following procedure is suggested if working within an HPC system using ANSYS CFX.
+
+- Define a main directory for the simulation project within the HPC system.
+- Upload the simulation directories (containing only the submission scripts) to a `samples` directory within the main project.
+- Upload all the CFX definition files to a `def_files_for_distribution` directory within the HPC system.
+- Distribute the definition files to the corresponding simulation directories. This can be automated by means of a shell script, such as the `distribute_def_files.sh` Bash script included with the toolbox.
+- Queue a suitable batch of simulations. This can be automated by means of a shell script, such as the `queue_samples.sh` Bash script included with the toolbox.
+
+<div style="text-align:center">
+    <img src="workflow_run.png" alt="Workflow for running simulations">
+</div>
+
+Running simulations is evidently specific to both the simulation software being used (for now, assumed to be ANSYS CFX) and to the hardware being used (e.g. Imperial College London HPC system, using the PBS job scheduler). The scripts provided will probably need to be tailored to your particular needs, but are useful as a template. These include:
+- `buildSimulationDirectories.m`: creates case directories, to be uploaded to the HPC system within the `samples` directory, and includes a PBS submission script for the simulation job.
+- `delete_distributed_def_files.sh`: deletes all the `*.def` files indicated.
+- `distribute_def_files.sh`: distributes all the `*.def` files from within the `def_files_for_distribution` folder to the corresponding folders within the `samples` folder.
+- `regroup_def_files.sh`: reverts `distribute_def_file.sh`.
+
 </details>
 
 <details>
