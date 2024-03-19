@@ -130,7 +130,7 @@ writetable(fourierSeries,sprintf('%s_out.xlsx',mfilename),"Sheet",'baseFourierSe
 Tpatient = 60./clinicalData.HR;
 
 % Compute mean pressure, according to Verrij et al (2008)
-Pmean = 0.4*(clinicalData.SP-clinicalData.SP) + clinicalData.DP;
+Pmean = 0.4*(clinicalData.SP-clinicalData.DP) + clinicalData.DP;
 
 % Compute the fraction of the stroke volume reaching the domain, Vp
 %   Cardiac Output is estimated via the Liljestrand & Zander formula (1940)
