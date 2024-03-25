@@ -74,7 +74,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-PASCAL CFD is a toolbox comprising a set of scripts that implement a semi-automated methodology for performing patient-specific blood flow CFD simulations within portions of the aorta. The project has been developed within the Xu Group (Biofluids and Transport) at Imperial College London.
+PASCAL CFD is a toolbox comprising a set of scripts that implement a semi-automated methodology for performing patient-specific blood flow CFD simulations within portions of the aorta. The project has been developed at the Xu Group (Biofluids and Transport) at Imperial College London.
 
 The provided scripts are mainly geared towards CFD simulation with ANSYS CFX and postprocessing with ANSYS EnSight. However, parts of the code provided could be useful for projects using other software.
 
