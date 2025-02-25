@@ -2,6 +2,7 @@
 % v1 - A.Vignolo - Nov 2023 - First implementation.
 % v2 - A.Vignolo - Mar 2024 - No iteration is actually needed to determine
 %                             the SF, this has been simplified.
+% v3 - A.Vignolo - Feb 2025 - Integrated warnings for results.
 %
 % This script preprocesses the inlet flow time waveform for bloodflow
 % simultions in a pulsatile regime. A raw datafile containing a time series
@@ -27,6 +28,21 @@ nTerms = 20;
 % Define the fraction of the stroke volume that is diverted before reaching
 % the simulation domain. E.g. 0.25 according to Moore & Ku (1994).
 divFrac = 0.25;
+
+% Range control
+    % Define variables for which to check ranges (define them below)
+    variablesToCheck = {'T','Pmean','Vp','ScaleFactor','phi'};
+    % Define typical values for output parameters to trigger warnings
+        % Cardiac cycle period, in s
+        ranges.T.min = 0.3; ranges.T.max = 1.4;
+        % Mean pressure, in mmHg
+        ranges.Pmean.min = 40; ranges.Pmean.max = 150;
+        % Fraction of the Stroke Volume into the domain, in m3
+        ranges.Vp.min = 25e-6; ranges.Vp.max = 150e-6;
+        % Scale factor for stroke volume
+        ranges.ScaleFactor.min = 0.5; ranges.ScaleFactor.max = 8;
+        % Scale factor for haematocrit
+        ranges.phi.min = 0.2; ranges.phi.max = 0.3;
 
 %% Import data
 % The reference waveform points (in s and m3/s) needs to be loded into the
@@ -114,8 +130,6 @@ fprintf(fileID,'inletflow = a0');
 for iMode = 1:nTerms
     fprintf(fileID,'+a%d*cos(v0*t)+b%d*sin(v0*t)',iMode,iMode);
 end
-fprintf(fileID,'\n\n----- PROGRAM EXECUTION END   : %s - %s ------------------------------------------------------------------\n',mfilename,datetime);
-fclose(fileID);
 
 %% Write coefficients to an Excel file
 fourierSeries = table((0:nTerms)',[a0,an(1:nTerms)]',[0,bn(1:nTerms)]',...
@@ -185,5 +199,30 @@ ax.FontSize = 12;
 grid on
 legend(legendCell,'Interpreter','latex','FontSize',10,'NumColumns',3)
 
-%% Write output to an Excel file
+%% Perform checks on results
+% Define results table
+results = [patientResults,clinicalData(:,'phi')];
+% Include warnings header
+fprintf(fileID,'\n\n-----WARNINGS FOR THE RESULTS (if any) ---------------------------------------------------------------\n');
+% Loop patients
+for iPatient = 1:size(clinicalData,1)
+    % Define case string
+    iPatientStr = results.Case{iPatient};
+    % Build base warning string
+    warningStringBase = 'Case: %6s: %s=%.1f is outside of the preset typical control range (%.1f,%.1f)\n';
+    % Loop variables to check
+    for iVar = 1:length(variablesToCheck)
+        iVarName = variablesToCheck{iVar};
+        % Check range
+        if ((ranges.(iVarName).min > results.(iVarName)(iPatient)) || (results.(iVarName)(iPatient) > ranges.(iVarName).max))
+            % Write warning to file
+            fprintf(fileID,warningStringBase,iPatientStr,iVarName,results.(iVarName)(iPatient),ranges.(iVarName).min,ranges.(iVarName).max);
+        end
+    end
+end
+
+%% Write output to an Excel file and terminate execution log
 writetable([patientResults,clinicalData(:,'phi')],sprintf('%s_out.xlsx',mfilename),"Sheet",'patientResults','WriteRowNames',false);
+
+fprintf(fileID,'\n\n----- PROGRAM EXECUTION END: %s - %s ------------------------------------------------------------------\n',mfilename,datetime);
+fclose(fileID);
