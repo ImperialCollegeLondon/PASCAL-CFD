@@ -9,3 +9,4 @@ version: 1.0.0
 date-released: 2026-02-10
 license: MIT
 repository-code: "https://github.com/ImperialCollegeLondon/PASCAL-CFD"
+doi: 10.5281/zenodo.18601870
