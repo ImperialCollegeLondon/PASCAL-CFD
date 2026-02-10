@@ -42,8 +42,6 @@
     <a href="https://github.com/ImperialCollegeLondon/PASCAL-CFD"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/ImperialCollegeLondon/PASCAL-CFD">View Demo</a>
-    ·
     <a href="https://github.com/ImperialCollegeLondon/PASCAL-CFD/issues">Report Bug</a>
     ·
     <a href="https://github.com/ImperialCollegeLondon/PASCAL-CFD/issues">Request Feature</a>
@@ -65,7 +63,7 @@
     <li><a href="#usage">Usage</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
+<!--     <li><a href="#acknowledgments">Acknowledgments</a></li>  -->
   </ol>
 </details>
 
@@ -313,6 +311,9 @@ Running simulations is evidently specific to both the simulation software being 
 
 <details>
 <summary><span style="font-size: 1.17em; font-weight: bold;">Postprocessing</summary>
+  
+  Some postprocessing utility files are provided in this toolbox, comprising both simple Bash scripts and snippets of Python-coded commands to be used withing Ansys Ensight. These include calculation (`compute_TAWSS_OSI_RRT.py`) and export (`export_shear_metrics_over_part.py` and `combineExportedMetrics.sh`) of common shear metrics (i.e. TAWSS, OSI and RRT), as well as simple convergence checking (`checkConvergence.sh`).
+  
 </details>
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -337,7 +338,7 @@ Don't forget to give the project a star! Thanks again!
 <!-- LICENSE -->
 ## License
 
-Information regarding licencing is to be added soon in a `LICENSE.txt` file. Might go with GNU GPL.
+Information regarding this toolbox's licence can be found in the `LICENSE` file. 
 
 <!-- Distributed under the MIT License. See `LICENSE.txt` for more information. -->
 
@@ -346,7 +347,7 @@ Information regarding licencing is to be added soon in a `LICENSE.txt` file. Mig
 <!-- CONTACT -->
 ## Contact
 
-Andrés Vignolo - avignolo96@gmail.com
+Andrés Vignolo Cortabarría - andres.vignolo23@imperial.ac.uk
 
 Project Link: [https://github.com/ImperialCollegeLondon/PASCAL-CFD](https://github.com/ImperialCollegeLondon/PASCAL-CFD)
 
@@ -354,7 +355,7 @@ Project Link: [https://github.com/ImperialCollegeLondon/PASCAL-CFD](https://gith
 
 
 
-<!-- ACKNOWLEDGMENTS -->
+<!-- ACKNOWLEDGMENTS 
 ## Acknowledgments
 All acknowledgments are to be added!
 * []()
@@ -362,7 +363,7 @@ All acknowledgments are to be added!
 * []()
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
+-->
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
