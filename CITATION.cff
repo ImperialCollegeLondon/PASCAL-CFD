@@ -1,0 +1,11 @@
+cff-version: 1.2.0
+title: "PASCAL-CFD: PAtient-SpecifiC Aortic bLood flow Computational Fluid Dynamics toolbox"
+message: "If you use this software, please cite it as below."
+authors:
+  - family-names: "Vignolo Cortabarría"
+    given-names: "Andrés"
+    orcid: "https://orcid.org/0000-0001-5241-6241"
+version: 1.0.0
+date-released: 2026-02-10
+license: MIT
+repository-code: "https://github.com/ImperialCollegeLondon/PASCAL-CFD"
