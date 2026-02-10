@@ -67,7 +67,10 @@
   </ol>
 </details>
 
-
+<!-- HOW TO CITE -->
+## How to cite
+If you use this code, please cite:
+Vignolo Cortabarría, A. (2026). PASCAL-CFD: PAtient-SpecifiC Aortic bLood flow Compuational Fluid Dynamics toolbox (v1.0.0).
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
@@ -76,7 +79,7 @@ PASCAL CFD is a toolbox comprising a set of scripts that implement a semi-automa
 
 The provided scripts are mainly geared towards CFD simulation with ANSYS CFX and postprocessing with ANSYS EnSight. However, parts of the code provided could be useful for projects using other software.
 
-Detailed explanation of the workflow and the implemented methodology are to be provided by a future paper, which will be linked if and when published.
+Detailed explanation of the workflow and the implemented methodology are to be provided in the companion paper _Patient-specific CFD aortic blood flow simulation: development and implementation of a methodology for large cohorts_, submitted to the Medical & Biological Engineering & Computing journal.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
