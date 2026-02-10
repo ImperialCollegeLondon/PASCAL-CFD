@@ -1,4 +1,4 @@
-%% WINDKESEL TUNING SCRIPT
+%% WINDKESSEL TUNING SCRIPT
 % v1 - W.Kaihong - May 2022 - Base code for single patient.
 % v2 - A.Vignolo - Nov 2023 - Code documentation and extention for
 %          an arbitrary number of patients. Input is redirected to a master
