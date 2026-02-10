@@ -37,7 +37,7 @@
 <h3 align="center">PASCAL-CFD</h3>
 
   <p align="center">
-    PAtient-SpecifiC Aortic bLood flow Compuational Fluid Dynamics toolbox
+    PAtient-SpecifiC Aortic bLood flow Computational Fluid Dynamics toolbox
     <br />
     <a href="https://github.com/ImperialCollegeLondon/PASCAL-CFD"><strong>Explore the docs »</strong></a>
     <br />
@@ -71,7 +71,7 @@
 ## How to cite
 If you use this code, please cite:
 
-Vignolo Cortabarría, A. (2026). PASCAL-CFD: PAtient-SpecifiC Aortic bLood flow Compuational Fluid Dynamics toolbox (v1.0.0).
+Vignolo Cortabarría, A. (2026). PASCAL-CFD: PAtient-SpecifiC Aortic bLood flow Computational Fluid Dynamics toolbox (v1.0.0).
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
