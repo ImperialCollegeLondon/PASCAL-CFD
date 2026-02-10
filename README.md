@@ -25,7 +25,7 @@
 [![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url] -->
 
-
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18601869.svg)](https://doi.org/10.5281/zenodo.18601869)
 
 <!-- PROJECT LOGO -->
 <br />
@@ -44,7 +44,7 @@
     <br />
     <a href="https://github.com/ImperialCollegeLondon/PASCAL-CFD/issues">Report Bug</a>
     ·
-    <a href="https://github.com/ImperialCollegeLondon/PASCAL-CFD/issues">Request Feature</a>
+    <a href="https://github.com/ImperialCollegeLondon/PASCAL-CFD/issues">Request Feature</a>     
   </p>
 </div>
 
@@ -71,7 +71,7 @@
 ## How to cite
 If you use this code, please cite:
 
-Vignolo Cortabarría, A. (2026). PASCAL-CFD: PAtient-SpecifiC Aortic bLood flow Computational Fluid Dynamics toolbox (v1.0.0).
+Vignolo Cortabarría, A. (2026). PASCAL-CFD: PAtient-SpecifiC Aortic bLood flow Computational Fluid Dynamics toolbox (v1.0.0). Zenodo. https://doi.org/10.5281/zenodo.18601870
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
