@@ -14,7 +14,7 @@ for case_number in {2..15}; do
     # cd to execution directory
     cd "./samples/${case_name}"
 
-    # Submit job
+    # Submit job (requires submission script for each case, which will be specific to the HPC system used)
     qsub "HPC_submit.sh"
 
     # Return to original directory
