@@ -70,6 +70,7 @@
 <!-- HOW TO CITE -->
 ## How to cite
 If you use this code, please cite:
+
 Vignolo Cortabarría, A. (2026). PASCAL-CFD: PAtient-SpecifiC Aortic bLood flow Compuational Fluid Dynamics toolbox (v1.0.0).
 
 <!-- ABOUT THE PROJECT -->
