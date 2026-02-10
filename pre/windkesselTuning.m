@@ -1,5 +1,5 @@
 %% WINDKESEL TUNING SCRIPT
-% v1 - W.Kaihong - ??? ???? - Implementation for a single patient.
+% v1 - W.Kaihong - May 2022 - Base code for single patient.
 % v2 - A.Vignolo - Nov 2023 - Code documentation and extention for
 %          an arbitrary number of patients. Input is redirected to a master
 %          project Excel file. Missing arteries management was improved,
